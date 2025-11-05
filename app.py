@@ -96,3 +96,16 @@ if st.button("Registrar"):
 
         st.write("### Bloque generado")
         st.json(record)
+st.write("---")
+st.subheader("🔎 Verificación de Documento")
+
+texto_verificar = st.text_area("Pega aquí el contenido del documento a verificar")
+
+if st.button("Verificar"):
+    if texto_verificar.strip() == "":
+        st.error("⚠️ Debes pegar un texto para verificar.")
+    else:
+        if verify(texto_verificar):
+            st.success("✅ Este documento ya estaba registrado (integridad comprobada).")
+        else:
+            st.error("❌ Documento NO encontrado en la cadena registrada.")

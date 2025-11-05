@@ -67,3 +67,32 @@ if st.button("Generar Acta + Hash"):
     st.write("### Bloque resultante")
     st.json(bloque)
 
+st.title("📄 Registro de Documentos Digitales")
+
+st.write("Este módulo permite registrar un documento y generar su huella criptográfica (hash) para asegurar integridad.")
+
+owner = st.text_input("Propietario del documento")
+content = st.text_area("Contenido del documento")
+
+if st.button("Registrar"):
+    if owner.strip() == "" or content.strip() == "":
+        st.error("⚠️ Debes completar todos los campos antes de registrar.")
+    else:
+        timestamp = time.time()
+        hashed = get_hash(content)
+
+        record = {
+            "owner": owner,
+            "content": content,
+            "hash": hashed,
+            "timestamp": timestamp
+        }
+
+        # Guardar registro (append en archivo local)
+        with open("blockchain.json", "a") as f:
+            f.write(json.dumps(record) + "\n")
+
+        st.success("Documento registrado con éxito ✅")
+
+        st.write("### Bloque generado")
+        st.json(record)
